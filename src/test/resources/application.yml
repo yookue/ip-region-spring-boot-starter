@@ -1,0 +1,9 @@
+# IP Region for Spring Boot Starter
+# Copyright (c) 2020 Yookue Ltd. All rights reserved.
+# https://yookue.com
+
+
+spring:
+    ip-region:
+        discard-lan: true
+        region-db: 'classpath:/ipaddr/Ip2Region_20220622/ip2region.db'
