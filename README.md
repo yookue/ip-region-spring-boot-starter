@@ -22,7 +22,7 @@ Spring Boot application integrates `IP2Region` quickly, to provide abilities to 
 spring:
     ip-region:
         discard-lan: true
-        region-db: 'classpath:/ipaddr/Ip2Region_20220622/ip2region.db'
+        region-db: 'classpath:/ipaddr/Ip2Region_20240228/ip2region.xdb'
 ```
 
 - Configure your beans with a `IpRegionResolver` bean by constructor or `@Autowired`/`@Resource` annotation, then you can resolve locations with it as following:
@@ -36,7 +36,6 @@ spring:
 
 - Github: https://github.com/yookue/ip-region-spring-boot-starter
 - Ip2region github: https://github.com/lionsoul2014/ip2region
-- Ip2region database v1: https://github.com/lionsoul2014/ip2region/tree/master/v1.0/data/ip2region.db
 
 ## Requirement
 
