@@ -17,17 +17,13 @@
 package com.yookue.springstarter.ipregion.composer.impl;
 
 
-import java.io.IOException;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import org.apache.commons.lang3.ObjectUtils;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
-import org.nutz.plugins.ip2region.DataBlock;
-import org.nutz.plugins.ip2region.DbSearcher;
+import org.lionsoul.ip2region.xdb.Searcher;
 import org.springframework.beans.factory.DisposableBean;
 import com.yookue.commonplexus.javaseutil.util.InetAddressWraps;
 import com.yookue.springstarter.ipregion.composer.IpRegionResolver;
-import com.yookue.springstarter.ipregion.enumeration.IpRegionSearchType;
 import com.yookue.springstarter.ipregion.structure.IpRegionOutcome;
 import lombok.AllArgsConstructor;
 
@@ -41,80 +37,40 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @SuppressWarnings("unused")
 public class DefaultIpRegionResolver implements IpRegionResolver, DisposableBean {
-    private DbSearcher searcher;
-    private IpRegionSearchType searchType;
+    private Searcher searcher;
     private boolean discardLan;
 
     @Nonnull
     @Override
-    public IpRegionOutcome getRegionOutcome(@Nullable String ipAddress) throws IOException {
-        return getRegionOutcome(ipAddress, searchType);
-    }
-
-    @Nonnull
-    @Override
-    public IpRegionOutcome getRegionOutcome(@Nullable String ipAddress, @Nullable IpRegionSearchType type) throws IOException {
-        if (StringUtils.isBlank(ipAddress) || (discardLan && InetAddressWraps.isLanAddress(ipAddress))) {
+    public IpRegionOutcome getRegionOutcome(@Nullable String ipAddress) throws Exception {
+        if (searcher == null || StringUtils.isBlank(ipAddress) || (discardLan && InetAddressWraps.isLanAddress(ipAddress))) {
             return new IpRegionOutcome();
         }
-        type = ObjectUtils.defaultIfNull(type, IpRegionSearchType.BTREE);
-        DataBlock dataBlock;
-        switch (type) {
-            case BINARY:
-                dataBlock = searcher.binarySearch(ipAddress);
-                break;
-            case MEMORY:
-                dataBlock = searcher.memorySearch(ipAddress);
-                break;
-            default:
-                dataBlock = searcher.btreeSearch(ipAddress);
-                break;
-        }
-        return (dataBlock == null) ? new IpRegionOutcome() : new IpRegionOutcome(dataBlock.getRegion());
+        return IpRegionOutcome.of(searcher.search(ipAddress));
     }
 
     @Override
     public IpRegionOutcome getRegionOutcomeQuietly(@Nullable String ipAddress) {
-        return getRegionOutcomeQuietly(ipAddress, searchType);
-    }
-
-    @Override
-    public IpRegionOutcome getRegionOutcomeQuietly(@Nullable String ipAddress, @Nullable IpRegionSearchType type) {
         try {
-            return getRegionOutcome(ipAddress, type);
+            return getRegionOutcome(ipAddress);
         } catch (Exception ignored) {
         }
         return null;
     }
 
     @Override
-    public String getCompositeAddress(@Nullable String ipAddress) throws IOException {
+    public String getCompositeAddress(@Nullable String ipAddress) throws Exception {
         return getRegionOutcome(ipAddress).getCompositeAddress();
     }
 
     @Override
-    public String getCompositeAddress(@Nullable String ipAddress, char delimiter) throws IOException {
+    public String getCompositeAddress(@Nullable String ipAddress, char delimiter) throws Exception {
         return getRegionOutcome(ipAddress).getCompositeAddress(delimiter);
     }
 
     @Override
-    public String getCompositeAddress(@Nullable String ipAddress, @Nullable String delimiter) throws IOException {
+    public String getCompositeAddress(@Nullable String ipAddress, @Nullable String delimiter) throws Exception {
         return getRegionOutcome(ipAddress).getCompositeAddress(delimiter);
-    }
-
-    @Override
-    public String getCompositeAddress(@Nullable String ipAddress, @Nullable IpRegionSearchType type) throws IOException {
-        return getRegionOutcome(ipAddress, type).getCompositeAddress();
-    }
-
-    @Override
-    public String getCompositeAddress(@Nullable String ipAddress, @Nullable IpRegionSearchType type, char delimiter) throws IOException {
-        return getRegionOutcome(ipAddress, type).getCompositeAddress(delimiter);
-    }
-
-    @Override
-    public String getCompositeAddress(@Nullable String ipAddress, @Nullable IpRegionSearchType type, @Nullable String delimiter) throws IOException {
-        return getRegionOutcome(ipAddress, type).getCompositeAddress(delimiter);
     }
 
     @Override
@@ -139,33 +95,6 @@ public class DefaultIpRegionResolver implements IpRegionResolver, DisposableBean
     public String getCompositeAddressQuietly(@Nullable String ipAddress, @Nullable String delimiter) {
         try {
             return getCompositeAddress(ipAddress, delimiter);
-        } catch (Exception ignored) {
-        }
-        return null;
-    }
-
-    @Override
-    public String getCompositeAddressQuietly(@Nullable String ipAddress, @Nullable IpRegionSearchType type) {
-        try {
-            return getCompositeAddress(ipAddress, type);
-        } catch (Exception ignored) {
-        }
-        return null;
-    }
-
-    @Override
-    public String getCompositeAddressQuietly(@Nullable String ipAddress, @Nullable IpRegionSearchType type, char delimiter) {
-        try {
-            return getCompositeAddress(ipAddress, type, delimiter);
-        } catch (Exception ignored) {
-        }
-        return null;
-    }
-
-    @Override
-    public String getCompositeAddressQuietly(@Nullable String ipAddress, @Nullable IpRegionSearchType type, @Nullable String delimiter) {
-        try {
-            return getCompositeAddress(ipAddress, type, delimiter);
         } catch (Exception ignored) {
         }
         return null;

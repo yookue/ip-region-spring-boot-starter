@@ -17,7 +17,8 @@
 package com.yookue.springstarter.ipregion.structure;
 
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -45,6 +46,11 @@ public class IpRegionOutcome {
     private String province;
     private String city;
     private String isp;
+
+    @Nonnull
+    public static IpRegionOutcome of(@Nullable String composite) {
+        return new IpRegionOutcome(composite);
+    }
 
     public IpRegionOutcome(@Nullable String composite) {
         if (StringUtils.isBlank(composite)) {
@@ -75,18 +81,18 @@ public class IpRegionOutcome {
             builder.append(country);
         }
         if (isValidField(province)) {
-            if (builder.length() > 0) {
+            if (!builder.isEmpty()) {
                 builder.append(StringUtils.defaultString(delimiter));
             }
             builder.append(province);
         }
         if (isValidField(city)) {
-            if (builder.length() > 0) {
+            if (!builder.isEmpty()) {
                 builder.append(StringUtils.defaultString(delimiter));
             }
             builder.append(city);
         }
-        return (builder.length() > 0) ? builder.toString() : null;
+        return (!builder.isEmpty()) ? builder.toString() : null;
     }
 
     private boolean isValidField(@Nullable String field) {

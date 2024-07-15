@@ -20,11 +20,9 @@ package com.yookue.springstarter.ipregion.config;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import org.apache.commons.lang3.BooleanUtils;
-import org.nutz.plugins.ip2region.DbConfig;
-import org.nutz.plugins.ip2region.DbSearcher;
-import org.nutz.plugins.ip2region.impl.ByteArrayDBReader;
+import org.lionsoul.ip2region.xdb.Searcher;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -52,29 +50,29 @@ import com.yookue.springstarter.ipregion.property.IpRegionProperties;
 @SuppressWarnings({"JavadocDeclaration", "JavadocLinkAsPlainText"})
 public class IpRegionAutoConfiguration {
     public static final String PROPERTIES_PREFIX = "spring.ip-region";    // $NON-NLS-1$
-    public static final String REGION_DB_SEARCHER = "ipRegionDbSearcher";    // $NON-NLS-1$
-    public static final String IP_REGION_RESOLVER = "ipRegionResolver";    // $NON-NLS-1$
+    public static final String REGION_SEARCHER = "ipRegionSearcher";    // $NON-NLS-1$
+    public static final String REGION_RESOLVER = "ipRegionResolver";    // $NON-NLS-1$
 
-    @Bean(name = REGION_DB_SEARCHER)
-    @ConditionalOnMissingBean(name = REGION_DB_SEARCHER)
+    @Bean(name = REGION_SEARCHER)
+    @ConditionalOnMissingBean(name = REGION_SEARCHER)
     @ConditionalOnProperty(prefix = PROPERTIES_PREFIX, name = "region-db")
-    public DbSearcher regionDbSearcher(@Nonnull IpRegionProperties properties) throws IOException {
+    public Searcher regionSearcher(@Nonnull IpRegionProperties properties) throws IOException {
         Resource resource = ResourceUtilsWraps.determineResource(properties.getRegionDb());
         if (resource == null || !resource.exists() || !resource.isReadable()) {
-            throw new FileNotFoundException("Region database is not exists or readable");
+            throw new FileNotFoundException("Region database is not exists or unreadable");
         }
         try (ByteArrayOutputStream output = new ByteArrayOutputStream()) {
             FileCopyUtils.copy(resource.getInputStream(), output);
-            return new DbSearcher(new DbConfig(), new ByteArrayDBReader(output.toByteArray()));
+            return Searcher.newWithBuffer(output.toByteArray());
         } catch (Exception ignored) {
         }
         return null;
     }
 
-    @Bean(name = IP_REGION_RESOLVER)
-    @ConditionalOnMissingBean(name = IP_REGION_RESOLVER)
-    @ConditionalOnBean(name = REGION_DB_SEARCHER)
-    public IpRegionResolver regionResolver(@Qualifier(value = REGION_DB_SEARCHER) @Nonnull DbSearcher searcher, @Nonnull IpRegionProperties properties) {
-        return new DefaultIpRegionResolver(searcher, properties.getSearchType(), BooleanUtils.isTrue(properties.getDiscardLan()));
+    @Bean(name = REGION_RESOLVER)
+    @ConditionalOnMissingBean(name = REGION_RESOLVER)
+    @ConditionalOnBean(name = REGION_SEARCHER)
+    public IpRegionResolver regionResolver(@Qualifier(value = REGION_SEARCHER) @Nonnull Searcher searcher, @Nonnull IpRegionProperties properties) {
+        return new DefaultIpRegionResolver(searcher, BooleanUtils.isTrue(properties.getDiscardLan()));
     }
 }

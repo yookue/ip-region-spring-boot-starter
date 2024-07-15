@@ -6,4 +6,4 @@
 spring:
     ip-region:
         discard-lan: true
-        region-db: 'classpath:/ipaddr/Ip2Region_20220622/ip2region.db'
+        region-db: 'classpath:/ipaddr/Ip2Region_20240228/ip2region.xdb'

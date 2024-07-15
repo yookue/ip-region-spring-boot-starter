@@ -40,7 +40,7 @@ spring:
 
 ## Requirement
 
-- jdk 1.8+
+- jdk 17+
 
 ## License
 

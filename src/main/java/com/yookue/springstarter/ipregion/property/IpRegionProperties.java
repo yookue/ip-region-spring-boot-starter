@@ -20,7 +20,6 @@ package com.yookue.springstarter.ipregion.property;
 import java.io.Serializable;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import com.yookue.springstarter.ipregion.config.IpRegionAutoConfiguration;
-import com.yookue.springstarter.ipregion.enumeration.IpRegionSearchType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -52,11 +51,4 @@ public class IpRegionProperties implements Serializable {
      * The region database resource url
      */
     private String regionDb;
-
-    /**
-     * Region search type
-     * <p>
-     * Default is {@code BTREE}
-     */
-    private IpRegionSearchType searchType = IpRegionSearchType.BTREE;
 }

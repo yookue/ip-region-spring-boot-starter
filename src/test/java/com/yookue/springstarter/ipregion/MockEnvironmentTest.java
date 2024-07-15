@@ -17,7 +17,6 @@
 package com.yookue.springstarter.ipregion;
 
 
-import java.io.IOException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +32,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 class MockEnvironmentTest {
     @Autowired
-    @Qualifier(value = IpRegionAutoConfiguration.IP_REGION_RESOLVER)
+    @Qualifier(value = IpRegionAutoConfiguration.REGION_RESOLVER)
     private IpRegionResolver regionSearcher;
 
     private static final String IP_ADDRESS = "61.158.208.225";    // $NON-NLS-1$
 
     @Test
-    void compositeAddress() throws IOException {
+    void compositeAddress() throws Exception {
         String methodName = StackTraceWraps.getExecutingMethodName();
         Assertions.assertNotNull(regionSearcher, "Region searcher can not be null");
         log.info("{}: IP {} address is {}", methodName, IP_ADDRESS, regionSearcher.getCompositeAddress(IP_ADDRESS));

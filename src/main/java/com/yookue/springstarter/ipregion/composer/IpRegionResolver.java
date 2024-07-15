@@ -17,10 +17,8 @@
 package com.yookue.springstarter.ipregion.composer;
 
 
-import java.io.IOException;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import com.yookue.springstarter.ipregion.enumeration.IpRegionSearchType;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import com.yookue.springstarter.ipregion.structure.IpRegionOutcome;
 
 
@@ -32,36 +30,19 @@ import com.yookue.springstarter.ipregion.structure.IpRegionOutcome;
 @SuppressWarnings("unused")
 public interface IpRegionResolver {
     @Nonnull
-    IpRegionOutcome getRegionOutcome(@Nullable String ipAddress) throws IOException;
-
-    @Nonnull
-    IpRegionOutcome getRegionOutcome(@Nullable String ipAddress, @Nullable IpRegionSearchType type) throws IOException;
+    IpRegionOutcome getRegionOutcome(@Nullable String ipAddress) throws Exception;
 
     IpRegionOutcome getRegionOutcomeQuietly(@Nullable String ipAddress);
 
-    IpRegionOutcome getRegionOutcomeQuietly(@Nullable String ipAddress, @Nullable IpRegionSearchType type);
+    String getCompositeAddress(@Nullable String ipAddress) throws Exception;
 
-    String getCompositeAddress(@Nullable String ipAddress) throws IOException;
+    String getCompositeAddress(@Nullable String ipAddress, char delimiter) throws Exception;
 
-    String getCompositeAddress(@Nullable String ipAddress, char delimiter) throws IOException;
-
-    String getCompositeAddress(@Nullable String ipAddress, @Nullable String delimiter) throws IOException;
-
-    String getCompositeAddress(@Nullable String ipAddress, @Nullable IpRegionSearchType type) throws IOException;
-
-    String getCompositeAddress(@Nullable String ipAddress, @Nullable IpRegionSearchType type, char delimiter) throws IOException;
-
-    String getCompositeAddress(@Nullable String ipAddress, @Nullable IpRegionSearchType type, @Nullable String delimiter) throws IOException;
+    String getCompositeAddress(@Nullable String ipAddress, @Nullable String delimiter) throws Exception;
 
     String getCompositeAddressQuietly(@Nullable String ipAddress);
 
     String getCompositeAddressQuietly(@Nullable String ipAddress, char delimiter);
 
     String getCompositeAddressQuietly(@Nullable String ipAddress, @Nullable String delimiter);
-
-    String getCompositeAddressQuietly(@Nullable String ipAddress, @Nullable IpRegionSearchType type);
-
-    String getCompositeAddressQuietly(@Nullable String ipAddress, @Nullable IpRegionSearchType type, char delimiter);
-
-    String getCompositeAddressQuietly(@Nullable String ipAddress, @Nullable IpRegionSearchType type, @Nullable String delimiter);
 }
