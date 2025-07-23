@@ -35,7 +35,7 @@ class MockEnvironmentTest {
     @Qualifier(value = IpRegionAutoConfiguration.REGION_RESOLVER)
     private IpRegionResolver regionSearcher;
 
-    private static final String IP_ADDRESS = "61.158.208.225";    // $NON-NLS-1$
+    private static final String IP_ADDRESS = "223.72.130.116";    // $NON-NLS-1$
 
     @Test
     void compositeAddress() throws Exception {
