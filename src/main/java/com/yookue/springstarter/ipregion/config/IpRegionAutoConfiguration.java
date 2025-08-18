@@ -25,6 +25,7 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.lionsoul.ip2region.xdb.Searcher;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -45,7 +46,7 @@ import com.yookue.springstarter.ipregion.property.IpRegionProperties;
  * @reference "https://github.com/hiwepy/ip2region-spring-boot-starter"
  */
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnProperty(prefix = IpRegionAutoConfiguration.PROPERTIES_PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnBooleanProperty(prefix = IpRegionAutoConfiguration.PROPERTIES_PREFIX, name = "enabled", matchIfMissing = true)
 @EnableConfigurationProperties(value = IpRegionProperties.class)
 @SuppressWarnings({"JavadocDeclaration", "JavadocLinkAsPlainText"})
 public class IpRegionAutoConfiguration {
