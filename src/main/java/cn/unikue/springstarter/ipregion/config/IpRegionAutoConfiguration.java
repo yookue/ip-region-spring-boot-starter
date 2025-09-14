@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Yookue Ltd. All rights reserved.
+ * Copyright (c) 2020 Unikue Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yookue.springstarter.ipregion.config;
+package cn.unikue.springstarter.ipregion.config;
 
 
 import java.io.ByteArrayOutputStream;
@@ -33,10 +33,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.util.FileCopyUtils;
-import com.yookue.commonplexus.springutil.util.ResourceUtilsWraps;
-import com.yookue.springstarter.ipregion.composer.IpRegionResolver;
-import com.yookue.springstarter.ipregion.composer.impl.DefaultIpRegionResolver;
-import com.yookue.springstarter.ipregion.property.IpRegionProperties;
+import cn.unikue.commonplexus.springutil.util.ResourceUtilsWraps;
+import cn.unikue.springstarter.ipregion.composer.IpRegionResolver;
+import cn.unikue.springstarter.ipregion.composer.impl.DefaultIpRegionResolver;
+import cn.unikue.springstarter.ipregion.property.IpRegionProperties;
 
 
 /**

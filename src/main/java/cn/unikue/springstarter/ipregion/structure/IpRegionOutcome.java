@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Yookue Ltd. All rights reserved.
+ * Copyright (c) 2020 Unikue Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yookue.springstarter.ipregion.structure;
+package cn.unikue.springstarter.ipregion.structure;
 
 
 import jakarta.annotation.Nonnull;
@@ -22,8 +22,8 @@ import jakarta.annotation.Nullable;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.StringUtils;
-import com.yookue.commonplexus.javaseutil.constant.CharVariantConst;
-import com.yookue.springstarter.ipregion.enumeration.IpRegionSegmentType;
+import cn.unikue.commonplexus.javaseutil.constant.CharVariantConst;
+import cn.unikue.springstarter.ipregion.enumeration.IpRegionSegmentType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
