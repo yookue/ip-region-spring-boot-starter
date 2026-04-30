@@ -1,3 +1,4 @@
 
 ip2region database:
-https://github.com/lionsoul2014/ip2region/blob/master/data/ip2region.xdb
+https://github.com/lionsoul2014/ip2region/blob/master/data/ip2region_v4.xdb
+https://github.com/lionsoul2014/ip2region/blob/master/data/ip2region_v6.xdb

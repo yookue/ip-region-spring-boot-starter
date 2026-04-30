@@ -20,6 +20,7 @@ package cn.unikue.springstarter.ipregion.property;
 import java.io.Serializable;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import cn.unikue.springstarter.ipregion.config.IpRegionAutoConfiguration;
+import cn.unikue.springstarter.ipregion.enumeration.IpRegionProtocolType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -51,4 +52,9 @@ public class IpRegionProperties implements Serializable {
      * The region database resource url
      */
     private String regionDb;
+
+    /**
+     * The protocol type of the region database
+     */
+    private IpRegionProtocolType protocol = IpRegionProtocolType.v4;
 }

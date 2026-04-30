@@ -22,7 +22,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import jakarta.annotation.Nonnull;
 import org.apache.commons.lang3.BooleanUtils;
+import org.lionsoul.ip2region.xdb.LongByteArray;
 import org.lionsoul.ip2region.xdb.Searcher;
+import org.lionsoul.ip2region.xdb.Version;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProperty;
@@ -36,6 +38,7 @@ import org.springframework.util.FileCopyUtils;
 import cn.unikue.commonplexus.springutil.util.ResourceUtilsWraps;
 import cn.unikue.springstarter.ipregion.composer.IpRegionResolver;
 import cn.unikue.springstarter.ipregion.composer.impl.DefaultIpRegionResolver;
+import cn.unikue.springstarter.ipregion.enumeration.IpRegionProtocolType;
 import cn.unikue.springstarter.ipregion.property.IpRegionProperties;
 
 
@@ -64,7 +67,10 @@ public class IpRegionAutoConfiguration {
         }
         try (ByteArrayOutputStream output = new ByteArrayOutputStream()) {
             FileCopyUtils.copy(resource.getInputStream(), output);
-            return Searcher.newWithBuffer(output.toByteArray());
+            Version version = (properties.getProtocol() == IpRegionProtocolType.v6) ? Version.IPv6 : Version.IPv4;
+            LongByteArray bytes = new LongByteArray();
+            bytes.append(output.toByteArray());
+            return Searcher.newWithBuffer(version, bytes);
         } catch (Exception ignored) {
         }
         return null;
