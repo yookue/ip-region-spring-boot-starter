@@ -28,9 +28,9 @@ import cn.unikue.springstarter.ipregion.config.IpRegionAutoConfiguration;
 import lombok.extern.slf4j.Slf4j;
 
 
-@SpringBootTest(classes = TestApplicationRunner.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(classes = MockApplicationInitializer.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @Slf4j
-class MockEnvironmentTest {
+class MockApplicationTest {
     @Autowired
     @Qualifier(value = IpRegionAutoConfiguration.REGION_RESOLVER)
     private IpRegionResolver regionSearcher;
